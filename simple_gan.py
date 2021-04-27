@@ -18,13 +18,14 @@ image_size = 28
 
 # %%
 # Read only one file
-path_img = os.listdir(path)[2]
-img = cv2.imread(os.path.join(path, path_img))
-img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-img_resized = cv2.resize(img_gray, (image_size, image_size))
+if path != 'MNIST':
+    path_img = os.listdir(path)[2]
+    img = cv2.imread(os.path.join(path, path_img))
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img_resized = cv2.resize(img_gray, (image_size, image_size))
 
-plt.imshow(img_resized, cmap='gray')
-plt.show()
+    plt.imshow(img_resized, cmap='gray')
+    plt.show()
 # %%
 # Read all images
 if path == 'MNIST':
@@ -177,9 +178,10 @@ def plot_results(gen):
     rows = 4
     for i in range(1, columns * rows + 1):
         image = generated_images[i - 1]
+        image = tf.reshape(image, (image_size, image_size))
+
         fig.add_subplot(rows, columns, i)
         plt.imshow(image, cmap="gray")
     plt.show()
-
 
 plot_results(generator)
